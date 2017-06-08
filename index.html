@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Framework-less SPA Demo</title>
+    
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    
+    <!-- css -->
+    <link rel="stylesheet" href="css/app.css">
+    
+    <!-- 3rd party js -->
+    <script src="js/lib/jquery-3.2.1.min.js"></script>
+    
+    <!-- app js -->
+    <script src="js/app.js"></script>
+    <script src="js/app.shell.js"></script>
+    <script src="js/utils/app.router.js"></script>
+    <script>
+        // initialize application once the DOM is ready
+        $(function() { app.init( $('#app')); });
+    </script>
+    
+</head>
+<body>
+  
+    <div id="app"></div>
+   
+</body>
+</html>
