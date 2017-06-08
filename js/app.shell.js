@@ -13,28 +13,6 @@ app.shell = (function ($) {
     
     var DOM = {};
     
-//            // html template
-//            main_html: `
-//                <div class="app-shell-head">
-//                    <div class="app-shell-head-logo">
-//                        <h1>app</h1>
-//                        <p>JavaScript end to end</p>
-//                    </div>
-//                    <div class="app-shell-head-acct"></div>
-//                </div>
-//
-//                <div class="app-shell-main">
-//                    <div class="app-shell-main-nav"></div>
-//                    <div class="app-shell-main-content"></div>
-//                </div>
-//
-//                <div class="app-shell-foot"></div>
-//                <div class="app-shell-modal"></div>`,
-//            
-//            // interval in ms between resize event consideration
-//            resize_interval: 200
-//        },
-        
         
     /* ============================ DOM METHODS ============================ */
     
@@ -43,9 +21,15 @@ app.shell = (function ($) {
         DOM.template = `
             <div class="app-shell-head">
                 <div class="app-shell-head-logo">
-                    <h1>Single Page Application, No Framework</h1>
+                    <h1>No Framework</h1>
                 </div>
-                <div class="app-shell-head-nav"></div>
+                <div class="app-shell-head-nav">
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#/blog">Blog</a></li>
+                        <li><a href="#/portfolio">Portfolio</a></li>
+                    </ul>
+                </div>
             </div>
 
             <div class="app-shell-main">
@@ -54,7 +38,6 @@ app.shell = (function ($) {
 
             <div class="app-shell-foot"></div>`;
         
-        DOM.$p = $(document.createElement('p'));
     }
     
     
@@ -64,7 +47,7 @@ app.shell = (function ($) {
     // handle URI hashchange events
     function onHashChange(event) {
         
-        app.router.route(location.hash.slice(1));
+        app.router.router(location.hash.slice(1));
     }
     
     /* ============================= CALLBACKS ============================= */

@@ -1,137 +1,48 @@
-/* app.router.js
-   Routing module for app
-   
-   example.com/#post?building-a-spa
-   example.com/#blog?post=building-a-spa
-   
-   
-*/
-
 /* jshint esversion:6, devel:true, browser:true */
-/* globals app */
+/* globals app, jQuery */
 
-app.router = (function () {
+app.router = (function($) {
     
-    /* =============================== SETUP =============================== */
+    'use strict';
     
-    var config = {
-            query_params: ''
-        },
-        
-        routes = {
-        
-            home : {
-                api_stub : 'home',
-                success_callback : 'home_page',
-                error_callback : 'home_page_error'
-            },
-
-            all_posts : {
-                api_stub : 'blog',
-                success_callback : 'show_all_posts',
-                error_callback : 'show_all_posts_error'
-            },
-
-            post : {
-                api_stub : 'blog/posts/' + config.query_params + '.md',
-                success_callback : 'show_post',
-                error_callback : 'show_post_error'
-            }
-        
-    };
+    var el = null,
+        routes = {};
     
-    /* ========================== PRIVATE METHODS ========================== */
+    /* ============================= UTILITIES ============================= */
     
-    
-    /*
-        views.all_posts = function(data, params){
-            var api_stub = 'posts/index.json';
-
-            utils.request(
-                api_stub,
-                'show_all_posts',
-                'show_all_posts_error'
-            );
+    // route registering function
+    function route(path, templateId, controller) {
+        routes[path] = {
+            templateId : templateId,
+            controller : controller
         };
-        
-        
-        views.home = function(data, params){
-            var api_stub = 'posts/index.json';
-
-            utils.request(
-                api_stub,
-                'home_page',
-                'home_page_error'
-            );
-        };
-        
-        
-        views.post = function(data, params){
-            var api_stub = 'posts/' + params[0] + '.md';
-
-            utils.request(
-                api_stub,
-                'show_post',
-                'show_post_error'
-            );   
-        }
-        
-        
-    */
-    
-    // build query param map from raw URI param string
-    function _makeParamsMap(p_str) {
-        
-        if (!p_str) { return false; }
-        
-        let params  = {},
-            p_array = p_str.split('&');
-        
-        p_array.forEach( (p) => {
-            let temp = p.split('=');
-            
-            if (!params.hasOwnProperty(temp[0])) {
-                params[temp[0]] = temp[1];
-            }
-            
-        });
-        
-        return params;
-        
     }
     
-    /* ========================== PUBLIC METHODS =========================== */
+    
+    /* ============================== ROUTES =============================== */
+    
+    route('/',          'home',      app.templates.home);    
+    route('/blog',      'blog',      app.templates.blog);
+    route('/portfolio', 'portfolio', app.templates.portfolio);
     
     
-    function route(hash, data) {
+    /* ============================== ROUTER =============================== */
+    
+    function router(url) {
+        el  = el || $('.app-shell-main-content');
+        url = url || '/';
         
-        hash = hash || 'home';
+        let route = routes[url];
         
-        let route      = hash.split('?')[0],
-            params_str = hash.split('?')[1],
-            hasParams  = Boolean(params_str),
-            params_map = hasParams ? _makeParamsMap(params_str) : null;
-        
-        // diag
-        console.clear();
-        console.log('Route: ' + route);
-        console.log('Param: ' + params_str);
-        console.log('MakeParamsMap: ', params_map);
-        
-        if (hasParams) {
-            config.query_params = params_map;
+        if (el && route.controller) {
+            el.html(route.controller);
         }
-        
-        // execute route
-        
-        
     }
     
     
     /* ============================ EXPORT API ============================= */
-    
     return {
-        route : route
+        router : router
     };
     
-}());
+}(jQuery));
